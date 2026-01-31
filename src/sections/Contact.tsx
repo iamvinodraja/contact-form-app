@@ -99,35 +99,15 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    try {
-      const response = await fetch('http://localhost:8000/api/contact-messages/', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+    // Simulate form submission
+    await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error('API Error Response:', errorText);
-        throw new Error(`API Error: ${response.status} - ${errorText}`);
-      }
+    setIsSubmitting(false);
+    setSubmitted(true);
+    setFormData({ name: '', email: '', message: '' });
 
-      const responseData = await response.json();
-      console.log('Success:', responseData);
-
-      setIsSubmitting(false);
-      setSubmitted(true);
-      setFormData({ name: '', email: '', message: '' });
-
-      // Reset submitted state after 3 seconds
-      setTimeout(() => setSubmitted(false), 3000);
-    } catch (error) {
-      console.error('Complete Error Details:', error);
-      setIsSubmitting(false);
-      alert(`Failed to send message: ${error instanceof Error ? error.message : 'Unknown error'}`);
-    }
+    // Reset submitted state after 3 seconds
+    setTimeout(() => setSubmitted(false), 3000);
   };
 
   return (
